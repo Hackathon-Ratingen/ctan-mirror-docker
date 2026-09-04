@@ -1,0 +1,22 @@
+services:
+  ctan-mirror:
+    build: .
+    container_name: ctan-mirror
+    volumes:
+      - ./ctan-data:/var/www/html/tex-archive
+    restart: always
+    labels:
+      traefik.enable: true
+      traefik.http.routers.ctan.rule: Host(`mirror.example.com`) # replace this
+      traefik.http.routers.ctan.entrypoints: websecure
+      traefik.http.routers.ctan.tls: true
+      traefik.http.routers.ctan.tls.certresolver: tls_resolver
+      traefik.http.routers.ctan.service: ctan
+      traefik.http.services.ctan.loadbalancer.server.port: 80
+      traefik.http.routers.ctan.middlewares: default@file
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
