@@ -16,8 +16,8 @@ Docker (Compose) setup for mirroring CTAN (Comprehensive TeX Archive Network).
 5. Access your mirror at `https://mirror.example.com` (or your configured domain).
 
 > [!IMPORTANT]
-> Please carefully read the guide on hosting a CTAN mirror at [CTAN's official guide](https://ctan.org/mirrors/register/)
-> Especiall, make sure to change the cronjob in `Dockerfile` to run at a custom time. You can generate a random time using the following command on linux:
+> Please carefully read the guide on hosting a CTAN mirror at [CTAN's official guide](https://ctan.org/mirrors/register/).
+> Especially, make sure to change the cronjob in `Dockerfile` to run at a custom time. You can generate a random time using the following command on Linux:
 >
 > ```bash
 > shuf -i 0-59 -n 1
