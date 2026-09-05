@@ -2,6 +2,10 @@ services:
   ctan-mirror:
     build: .
     container_name: ctan-mirror
+    environment:
+      # Pick a unique minute/hour so public CTAN mirrors do not all sync at once.
+      CTAN_SYNC_CRON: "21 * * * *"
+      HOST: mirror.example.com
     volumes:
       - ./ctan-data:/var/www/html/tex-archive
     restart: always

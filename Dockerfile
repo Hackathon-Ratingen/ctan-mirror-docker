@@ -1,5 +1,8 @@
 FROM debian:bookworm-slim
 
+ENV CTAN_SYNC_CRON="21 * * * *" \
+    APACHE_SERVER_NAME="localhost"
+
 RUN apt-get update && \
     apt-get install -y \
       apache2 \
@@ -16,10 +19,7 @@ RUN mkdir -p /var/www/html/tex-archive && \
     chown -R www-data:www-data /var/www/html/tex-archive
 
 COPY sync-ctan.sh /usr/local/bin/sync-ctan.sh
-# Change the cron schedule to a custom time. See README.md for more information.
-RUN chmod +x /usr/local/bin/sync-ctan.sh && \
-    echo "21 * * * * /usr/local/bin/sync-ctan.sh >> /var/log/ctan-sync.log 2>&1" \
-      | crontab -
+RUN chmod +x /usr/local/bin/sync-ctan.sh
 
 COPY ctan-site.conf /etc/apache2/sites-available/ctan.conf
 RUN a2ensite ctan.conf
